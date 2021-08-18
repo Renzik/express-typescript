@@ -26,6 +26,14 @@ var LoginController = /** @class */ (function () {
             res.send('Invalid');
         }
     };
+    LoginController.prototype.logout = function (req, res, next) {
+        if (req.session && req.session.loggedIn) {
+            req.session = { loggedIn: false };
+            res.redirect('/');
+        }
+        else
+            res.send("You're not logged in");
+    };
     __decorate([
         decorators_1.Get('/login'),
         __metadata("design:type", Function),
@@ -39,6 +47,12 @@ var LoginController = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object, Function]),
         __metadata("design:returntype", void 0)
     ], LoginController.prototype, "login", null);
+    __decorate([
+        decorators_1.Get('/logout'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object, Function]),
+        __metadata("design:returntype", void 0)
+    ], LoginController.prototype, "logout", null);
     LoginController = __decorate([
         decorators_1.Controller('/auth')
     ], LoginController);

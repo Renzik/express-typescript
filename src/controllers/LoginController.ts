@@ -32,4 +32,12 @@ class LoginController {
       res.send('Invalid');
     }
   }
+
+  @Get('/logout')
+  logout(req: Request, res: Response, next: NextFunction) {
+    if (req.session && req.session.loggedIn) {
+      req.session = { loggedIn: false };
+      res.redirect('/');
+    } else res.send("You're not logged in");
+  }
 }
