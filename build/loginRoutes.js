@@ -11,16 +11,6 @@ var requireAuth = function (req, res, next) {
     }
     res.status(403).send('Not permitted');
 };
-router.post('/login', function (req, res, next) {
-    var _a = req.body, email = _a.email, password = _a.password;
-    if (email && password && email === 'mail@mail.com' && password === '123') {
-        req.session = { loggedIn: true };
-        res.redirect('/');
-    }
-    else {
-        res.send('Invalid');
-    }
-});
 router.get('/logout', requireAuth, function (req, res, next) {
     if (req.session && req.session.loggedIn) {
         req.session = { loggedIn: false };

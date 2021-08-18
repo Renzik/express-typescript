@@ -14,17 +14,6 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
   res.status(403).send('Not permitted');
 };
 
-router.post('/login', (req: RequestWithBody, res: Response, next: NextFunction) => {
-  const { email, password } = req.body;
-
-  if (email && password && email === 'mail@mail.com' && password === '123') {
-    req.session = { loggedIn: true };
-    res.redirect('/');
-  } else {
-    res.send('Invalid');
-  }
-});
-
 router.get('/logout', requireAuth, (req: Request, res: Response, next: NextFunction) => {
   if (req.session && req.session.loggedIn) {
     req.session = { loggedIn: false };
