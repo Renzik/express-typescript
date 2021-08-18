@@ -1,14 +1,23 @@
-import express, { Request, Response, NextFunction } from 'express';
+import { urlencoded } from 'body-parser';
+import cookieSession from 'cookie-session';
+import express from 'express';
+import { router } from './loginRoutes';
+import { AppRouter } from './AppRoute';
+
+// controllers
+import './controllers/LoginController';
+
 const PORT: number = 3000;
+
 const app = express();
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send(`
-  <div>
-  <h1>Hello there!</h1>
-  </div>
-  `);
-});
+app.use(urlencoded({ extended: true }));
+app.use(cookieSession({ keys: ['secret'] }));
+
+app.use(router);
+
+// routes
+app.use(AppRouter.getInstance());
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
